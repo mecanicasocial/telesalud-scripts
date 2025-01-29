@@ -29,21 +29,31 @@ cons_vicio <- datos %>%
   filter(grepl("lent", `Información adicional`, ignore.case = TRUE) |
          grepl("vici", `Información adicional`, ignore.case = TRUE)) %>%
   distinct(`Nº identificador`, .keep_all = TRUE) %>%
-  arrange(`Nº identificador`)
+  arrange(`Fecha solicitud`)
+
+# Resultados
 
 cat("Resultados Vicio\n")
-for (id in cons_vicio$`Nº identificador`) {
-  cat(id, "\n")
+if (nrow(cons_vicio) == 0) {
+  cat("No se encontraron resultados.\n")
+} else {
+  for (id in cons_vicio$`Nº identificador`) {
+    cat(id, "\n")
+  }
 }
 
 # Comandos de busqueda LME
 md_casos <- datos %>%
   filter(grepl("Medicina", `Tipo prestador`, ignore.case = FALSE))
 
-lme_search <- datos %>%
-  filter(grepl("licencia", `Información adicional`, ignore.case = TRUE))
+lme_search <- datos[grepl("licencia", datos$`Información adicional`, ignore.case = TRUE), ] %>% arrange(`Fecha solicitud`)
 
+# Resultados
 cat("Resultados LME\n")
-for (id in lme_search$`Nº identificador`) {
-  cat(id, "\n")
+if (nrow(lme_search) == 0) {
+  cat("No se encontraron resultados para LME\n")
+} else {
+  for (id in lme_search$`Nº identificador`) {
+    cat(id, "\n")
+  }
 }

@@ -23,9 +23,13 @@ ametropia_search <- datos[grepl("vici", datos$`Información adicional`, ignore.c
 
 # Consolidar y limpiar duplicados
 cons_vicio <- bind_rows(lentes_search, ametropia_search)
-cons_vicio_limpio <- cons_vicio %>% distinct(`Nº identificador`, .keep_all = TRUE) %>% arrange(`Nº identificador`)
+cons_vicio_limpio <- cons_vicio %>% distinct(`Nº identificador`, .keep_all = TRUE) %>% arrange(`Fecha solicitud`)
 # Resultados
 cat("Resultados Vicio\n")
-for (id in cons_vicio_limpio$`Nº identificador`) {
-  cat(id, "\n")
+if (nrow(cons_vicio_limpio) == 0) {
+  cat("No se encontraron resultados.\n")
+} else {
+  for (id in cons_vicio_limpio$`Nº identificador`) {
+    cat(id, "\n")
+  }
 }
