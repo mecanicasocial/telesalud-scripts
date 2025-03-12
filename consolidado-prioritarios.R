@@ -11,7 +11,14 @@ conflicts_prefer(dplyr::filter)
 conflicts_prefer(dplyr::lag)
 
 # Definir la ruta del archivo
-ruta_archivo <- file.path(Sys.getenv("USERPROFILE"), "Downloads", "TodasLasSolicitudesPendientes.xlsx")
+ruta_descargas <- file.path(Sys.getenv("USERPROFILE"), "Downloads")
+# Validar que el archivo exista
+archivos <- list.files(ruta_descargas, pattern = "TodasLasSolicitudesPendientes.*\\.xlsx$", full.names = TRUE)
+if (length(archivos) == 0) {
+  cat("No se encontraron archivos.\n")
+  return()
+}
+ruta_archivo <- archivos[which.max(file.info(archivos)$mtime)]
 
 # Manejar posibles errores al leer el archivo
 tryCatch({
