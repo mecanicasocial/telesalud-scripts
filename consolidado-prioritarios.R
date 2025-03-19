@@ -11,7 +11,11 @@ conflicts_prefer(dplyr::filter)
 conflicts_prefer(dplyr::lag)
 
 # Definir la ruta del archivo
-ruta_descargas <- file.path(Sys.getenv("USERPROFILE"), "Downloads")
+ruta_descargas <- if (Sys.info()["sysname"] == "Windows") {
+  file.path(Sys.getenv("USERPROFILE"), "Downloads")
+} else {
+  file.path(Sys.getenv("HOME"), "Downloads")
+}
 # Validar que el archivo exista
 archivos <- list.files(ruta_descargas, pattern = "TodasLasSolicitudesPendientes.*\\.xlsx$", full.names = TRUE)
 if (length(archivos) == 0) {
@@ -43,4 +47,6 @@ buscar_y_mostrar_resultados <- function(datos, patron, mensaje) {
 # Comandos de búsqueda y resultados
 buscar_y_mostrar_resultados(datos, "lent|vici", "Resultados Vicio")
 buscar_y_mostrar_resultados(datos, "licencia", "Resultados LME")
-buscar_y_mostrar_resultados(datos, "GES", "Resultados GES")
+buscar_y_mostrar_resultados(datos, "\\bGES\\b", "Resultados GES")
+buscar_y_mostrar_resultados(datos, "fieb|resp|COVID|influe|conges", "Respiratorios")
+buscar_y_mostrar_resultados(datos, "diar|vomi|naus", "Gastrointestinal")
