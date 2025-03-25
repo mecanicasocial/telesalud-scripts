@@ -1,11 +1,13 @@
-# Instalar y cargar los paquetes necesarios
-required_packages <- c("readxl", "conflicted", "tidyverse")
+required_packages <- c("readxl", "conflicted", "tidyverse", "rmarkdown", "dplyr", "quarto")
 new_packages <- required_packages[!(required_packages %in% installed.packages()[,"Package"])]
 if(length(new_packages)) install.packages(new_packages)
 
 library(readxl)
 library(conflicted)
 library(tidyverse)
+library(rmarkdown)
+library(dplyr)
+library(quarto)
 
 conflicts_prefer(dplyr::filter)
 conflicts_prefer(dplyr::lag)
