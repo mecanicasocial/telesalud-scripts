@@ -1,3 +1,6 @@
+# Usar el servidor CRAN de Chile
+options(repos = c(CRAN = "https://cran.dcc.uchile.cl"))
+
 required_packages <- c("readxl", "conflicted", "tidyverse", "rmarkdown", "dplyr", "quarto")
 new_packages <- required_packages[!(required_packages %in% installed.packages()[,"Package"])]
 if(length(new_packages)) install.packages(new_packages)
